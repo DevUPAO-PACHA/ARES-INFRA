@@ -2,7 +2,7 @@
 variable "aws_region" {
   description = "La región de AWS donde se desplegará la infraestructura."
   type        = string
-  default     = "us-east-2" # N. Virginia, común para CDN y alta disponibilidad
+  default     = "us-east-1" # N. Virginia, común para CDN y alta disponibilidad
 }
 
 # Nombre del proyecto para etiquetar todos los recursos
