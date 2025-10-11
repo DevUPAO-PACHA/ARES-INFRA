@@ -32,7 +32,7 @@ resource "aws_db_instance" "mysql_db" {
   vpc_security_group_ids = [aws_security_group.rds.id]
 
   # Base de Datos y Nombre
-  db_name              = "${var.project_name}_db"
+  db_name              = "pacha_reservas_db"
   identifier           = "${var.project_name}-mysql-instance"
 
   # Retención y Backup

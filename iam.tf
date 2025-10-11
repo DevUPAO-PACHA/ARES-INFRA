@@ -16,7 +16,8 @@ data "aws_iam_policy_document" "codepipeline_trust" {
     actions = ["sts:AssumeRole"]
     principals {
       type        = "Service"
-      identifiers = ["codepipeline.amazonaws.com"]
+      identifiers = ["codepipeline.amazonaws.com",
+        "codebuild.amazonaws.com"]
     }
   }
 }
@@ -117,7 +118,11 @@ resource "aws_iam_policy" "codepipeline_policy" {
           "iam:PassRole",                # Para pasar los roles a Fargate
           "cloudwatch:*"                 # Integración #3 (Logs y Métricas)
         ],
-        Resource = "*"
+        Resource = [
+          "*", # Mantén el asterisco para CodeBuild, S3, etc.
+          aws_iam_role.ecs_task_role.arn,
+          aws_iam_role.ecs_task_execution_role.arn
+        ]
       },
     ]
   })

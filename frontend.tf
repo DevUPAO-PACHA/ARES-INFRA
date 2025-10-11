@@ -29,12 +29,6 @@ resource "aws_s3_bucket_website_configuration" "frontend_website" {
   }
 }
 
-# 3. Política de Acceso PÚBLICO (¡Solo para Testing/Demo!)
-# Esto es necesario para que el S3 sirva el contenido a Internet directamente.
-resource "aws_s3_bucket_acl" "example" {
-  bucket = aws_s3_bucket.frontend_bucket.id
-  acl    = "public-read"
-}
 
 data "aws_iam_policy_document" "s3_public_policy" {
   statement {
@@ -53,11 +47,11 @@ data "aws_iam_policy_document" "s3_public_policy" {
     ]
   }
 }
-
+/*
 resource "aws_s3_bucket_policy" "frontend_bucket_policy" {
   bucket = aws_s3_bucket.frontend_bucket.id
   policy = data.aws_iam_policy_document.s3_public_policy.json
-}
+}*/
 
 # --- OUTPUT (PARA OBTENER LA URL DE PRUEBA) ---
 output "frontend_url_test" {

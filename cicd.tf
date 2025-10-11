@@ -142,13 +142,12 @@ resource "aws_codepipeline" "frontend_pipeline" {
   name     = "${var.project_name}-frontend-pipeline"
   role_arn = aws_iam_role.codepipeline_role.arn
 
-  # SINTAXIS CORREGIDA: Bloque artifact_store en líneas separadas
   artifact_store {
     location = aws_s3_bucket.codepipeline_artifacts.bucket
     type     = "S3"
   }
 
-  # --- ETAPA 1: FUENTE (GitHub FRONTEND) ---
+  # --- ETAPA 1: FUENTE (GitHub FRONTEND - CORREGIDO) ---
   stage {
     name = "Source"
     action {
@@ -159,12 +158,12 @@ resource "aws_codepipeline" "frontend_pipeline" {
       version          = "1"
       output_artifacts = ["FrontendSourceArtifact"]
 
+      # CORRECCIÓN 2: Se eliminan los campos obsoletos (Owner, Repo, OAuthToken)
       configuration = {
-        Owner = "angeloncoy"
-        Repo = "ARES-LANDING"
-        Branch = "main"
-        PollForSourceChanges = "false"
-        OAuthToken = "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" # <--- TOKEN NO RECOMENDADO
+        ConnectionArn    = aws_codestarconnections_connection.github_frontend_connection.arn # <--- Conexión segura
+        FullRepositoryId = "angeloncoy/ARES-LANDING"
+        BranchName       = "main"
+        # OAuthToken, Owner, Repo y PollForSourceChanges eliminados.
       }
     }
   }

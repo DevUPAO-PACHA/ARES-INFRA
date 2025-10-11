@@ -22,7 +22,7 @@ resource "aws_lb" "application_lb" {
 # Aquí es donde se registran las tareas de ECS Fargate
 resource "aws_lb_target_group" "spring_boot_tg" {
   name        = "${var.project_name}-tg-spring-boot"
-  port        = 8080 # El puerto que está escuchando la aplicación Spring Boot
+  port        = 8080
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
   target_type = "ip" # Necesario para ECS Fargate
@@ -42,17 +42,11 @@ resource "aws_lb_target_group" "spring_boot_tg" {
   tags = { Name = "spring-boot-target-group" }
 }
 
-# 3. Listener HTTPS (Puerto 443)
-# Esta es la regla principal: el ALB escucha el tráfico 443
-resource "aws_lb_listener" "https" {
+# 3. Listener HTTP (Puerto 80) para el Load Balancer
+resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.application_lb.arn
-  port              = 443
-  protocol          = "HTTPS"
-
-  # Debes reemplazar el ARN siguiente con tu ARN de AWS Certificate Manager (ACM)
-  # Si no tienes uno, crea uno gratuito en ACM.
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = "arn:aws:acm:us-east-1:282681674742:certificate/e124b862-15fe-4da0-938c-57ddbb5b68bd"
+  port              = "80"
+  protocol          = "HTTP"
 
   default_action {
     type             = "forward"

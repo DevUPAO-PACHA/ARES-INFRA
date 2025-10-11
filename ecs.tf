@@ -91,7 +91,7 @@ resource "aws_ecs_service" "spring_boot_service" {
   deployment_maximum_percent         = 200
 
   depends_on = [
-    aws_lb_listener.https, # Espera que el listener del ALB esté listo
+    aws_lb_listener.http, # <--- ¡ESTO ES LO QUE FALTABA!
     aws_iam_role_policy_attachment.ecs_task_exec_policy,
     aws_iam_role_policy_attachment.ecs_task_policy_attach,
   ]
