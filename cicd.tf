@@ -69,17 +69,16 @@ resource "aws_codepipeline" "backend_pipeline" {
     action {
       name             = "Source-Backend"
       category         = "Source"
-      owner            = "ThirdParty"
-      provider         = "GitHub"
+      owner            = "AWS"
+      provider         = "CodeStarSourceConnection"
       version          = "1"
       output_artifacts = ["BackendSourceArtifact"]
 
       configuration = {
-        Owner = "angeloncoy"
-        Repo = "ARES-BACK"
-        Branch = "main"
-        PollForSourceChanges = "false"
-        OAuthToken = "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"
+        ConnectionArn    = aws_codestarconnections_connection.github_backend_connection.arn # <--- ARTEFACTO DE CONEXIÓN
+        FullRepositoryId = "angeloncoy/ARES-BACK" # <--- Formato: Usuario/Repo
+        BranchName       = "main"
+        # OAuthToken, Owner, y Repo YA NO son necesarios
       }
     }
   }
@@ -155,17 +154,17 @@ resource "aws_codepipeline" "frontend_pipeline" {
     action {
       name             = "Source-Angular"
       category         = "Source"
-      owner            = "ThirdParty"
-      provider         = "GitHub"
+      owner            = "AWS"
+      provider         = "CodeStarSourceConnection"
       version          = "1"
       output_artifacts = ["FrontendSourceArtifact"]
 
       configuration = {
-        Owner = "angeloncoy"             # ¡REEMPLAZAR!
-        Repo = "ARES-LANDING"               # ¡REEMPLAZAR con el repo del frontend!
+        Owner = "angeloncoy"
+        Repo = "ARES-LANDING"
         Branch = "main"
         PollForSourceChanges = "false"
-        OAuthToken = "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" # ¡REEMPLAZAR!
+        OAuthToken = "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" # <--- TOKEN NO RECOMENDADO
       }
     }
   }
