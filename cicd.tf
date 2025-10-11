@@ -5,7 +5,7 @@ data "aws_caller_identity" "current" {}
 
 # 1. Bucket de Artifacts (Necesario para CodePipeline)
 resource "aws_s3_bucket" "codepipeline_artifacts" {
-  bucket = "${var.project_name}-codepipeline-artifacts"
+  bucket = "reserva-mesas-codepipeline-artifacts-bucket-for-pipeline"
   tags = { Name = "codepipeline-artifacts" }
 }
 

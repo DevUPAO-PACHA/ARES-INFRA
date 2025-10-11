@@ -24,7 +24,7 @@ resource "aws_db_instance" "mysql_db" {
   # Credenciales Maestras (Admin)
   username             = "admin"
   # La contraseña se obtiene del Secret Manager (¡Seguridad!)
-  password             = random_password.db_master_password.result
+  password             = "MiContrasenia123"
 
   # Configuración de Red y Seguridad
   db_subnet_group_name = aws_db_subnet_group.private_db_group.name
