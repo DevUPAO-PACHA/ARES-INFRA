@@ -2,7 +2,7 @@
 # Necesario para que el NAT Gateway tenga una IP pública estática
 resource "aws_eip" "nat" {
   count = 2
-  vpc   = true
+  domain = "vpc"
   tags = {
     Name = "${var.project_name}-eip-nat-az${count.index + 1}"
   }
