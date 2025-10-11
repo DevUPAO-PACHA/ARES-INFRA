@@ -9,7 +9,7 @@ variable "bucket_name_frontend" {
 
 # 1. Bucket S3 para alojar los archivos Angular
 resource "aws_s3_bucket" "frontend_bucket" {
-  bucket = var.bucket_name_frontend
+  bucket = "reserva-mesas-frontend-testing-bucket-for-frontend"
   tags = {
     Name = "frontend-hosting-bucket-test"
   }
