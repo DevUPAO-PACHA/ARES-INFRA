@@ -1,4 +1,3 @@
-data "aws_caller_identity" "current" {}
 
 # Define la entidad de confianza para los roles de ECS
 data "aws_iam_policy_document" "ecs_trust" {
