@@ -1,9 +1,5 @@
 pipeline {
-    agent { label 'terraform-agent' } 
-    
-    options {
-        timestamps()
-    }
+    agent { label 'terraform-agent' }
 
     stages {
         stage('Checkout') {
@@ -20,7 +16,7 @@ pipeline {
             }
         }
 
-        stage('Terraform Format & Validate') {
+        stage('Terraform Validate') {
             steps {
                 sh '''
                   terraform fmt -check
@@ -32,7 +28,7 @@ pipeline {
 
     post {
         always {
-            echo "Pipeline ARES-INFRA ejecutado en agente 'terraform-agent'"
+            echo "Pipeline ARES-INFRA ejecutado en agente terraform-agent"
         }
     }
 }
