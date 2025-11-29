@@ -1,0 +1,41 @@
+jenkins:
+  systemMessage: "Jenkins configurado con JCasC para proyecto ARES-INFRA"
+
+  # 0 ejecutores en el master → todo va por agentes
+  numExecutors: 0
+
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "admin123"
+
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+  # Configuración del Cloud para agentes (Docker)
+  clouds:
+    - docker:
+        name: "docker-cloud"
+        dockerApi:
+          dockerHost:
+            uri: "unix:///var/run/docker.sock"
+        templates:
+          - labelString: "terraform-agent"
+            name: "terraform-docker-agent"
+            remoteFs: "/home/jenkins/agent"
+            instanceCap: 2
+            mode: EXCLUSIVE
+            connector:
+              attach:
+                user: "jenkins"
+            dockerTemplateBase:
+              image: "hashicorp/terraform:1.9.8"   # Imagen base con Terraform
+              privileged: true
+              network: "bridge"
+
+unclassified:
+  location:
+    url: "http://localhost:8080/"
